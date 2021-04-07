@@ -11,7 +11,7 @@ class ApiCallsCollection(Collection):
     ]
 
 # 接口调用记录装饰器
-def apiCallRecord(func, apiPath=None, extraData=None):
+def apiCallRecord(func=None, apiPath=None, extraData=None):
     if func is None:
         return partial(apiCallRecord, apiPath=apiPath, 
             extraData=extraData)
