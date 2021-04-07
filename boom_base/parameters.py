@@ -1,9 +1,9 @@
 import os
 
 # 获取环境变量
-def getEnvPara(parameterName, defalut=None, 
+def getEnvPara(parameterName, default=None, 
     raiseExceptionIfNone=True):
-    parameterValue = os.environ.get(parameterName, defalut)
+    parameterValue = os.environ.get(parameterName, default)
     if parameterValue is None and raiseExceptionIfNone:
         raise Exception(parameterName + " not defined")
     return parameterValue
@@ -48,13 +48,13 @@ def getCeleryParaFromEnv():
 # 从环境变量获取 日志 配置参数
 def getLogParaFromEnv():
     return {
-        "logFilePath": getEnvPara('log_file_path', defalut=None, 
+        "logFilePath": getEnvPara('log_file_path',
             raiseExceptionIfNone=False),
-        "logToConsole": getEnvPara('log_to_console', defalut=True,
+        "logToConsole": getEnvPara('log_to_console', default=True,
             raiseExceptionIfNone=False),
         "backCounts": getEnvPara('back_counts', default=1024*1024,
             raiseExceptionIfNone=False),
-        "maxBytes": getEnvPara('max_bytes', defalut=5,
+        "maxBytes": getEnvPara('max_bytes', default=5,
             raiseExceptionIfNone=False),
     }
 
@@ -62,8 +62,8 @@ def getLogParaFromEnv():
 def getRedisParaFromEnv():
     return {
         "host":  getEnvPara('redis_host'),
-        "port": int(getEnvPara('redis_port', defalut=6379)),
-        "db": int(getEnvPara('redis_db', defalut=0)),
-        "password": getEnvPara('redis_password', defalut=None, raiseExceptionIfNone=False),
-        "decode_responses": getEnvPara('redis_decode_responses', defalut=True),
+        "port": int(getEnvPara('redis_port', default=6379)),
+        "db": int(getEnvPara('redis_db', default=0)),
+        "password": getEnvPara('redis_password', default=None, raiseExceptionIfNone=False),
+        "decode_responses": getEnvPara('redis_decode_responses', default=True),
     }

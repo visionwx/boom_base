@@ -17,6 +17,7 @@ from boom_base import *
 
 ## Change
 #### 2021-04-08
+- 【修复】parameters.getEnvPara 参数default拼写错误
 - 【优化】增加api_calls 日志
 - 【新增】增加api_calls apiCallRecord装饰器
 
