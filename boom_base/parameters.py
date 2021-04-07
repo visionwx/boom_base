@@ -57,3 +57,13 @@ def getLogParaFromEnv():
         "maxBytes": getEnvPara('max_bytes', defalut=5,
             raiseExceptionIfNone=False),
     }
+
+# 从环境变量获取redis配置参数
+def getRedisParaFromEnv():
+    return {
+        "host":  getEnvPara('redis_host'),
+        "port": int(getEnvPara('redis_port', defalut=6379)),
+        "db": int(getEnvPara('redis_db', defalut=0)),
+        "password": getEnvPara('redis_password', defalut=None, raiseExceptionIfNone=False),
+        "decode_responses": getEnvPara('redis_decode_responses', defalut=True),
+    }

@@ -17,4 +17,4 @@ from boom_base import *
 
 ## Change
 #### 2021-04-07
-- First create
+- 【新增】增加redisdb
