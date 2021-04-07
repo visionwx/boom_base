@@ -19,7 +19,7 @@ class Collection:
     NAME:str = None
 
     # 数据库实例
-    DB = getMongoInstance()
+    DB = None
 
     # 所有字段
     FIELDS = []
@@ -35,7 +35,8 @@ class Collection:
     
     # 构建函数
     def __init__(self):
-        pass
+        self.DB = getMongoInstance()
+        
     @abc.abstractmethod
     def create(self, data, id=None):
         pass
