@@ -17,4 +17,5 @@ from boom_base import *
 
 ## Change
 #### 2021-04-07
+- 【新增】增加api_calls
 - 【新增】增加redisdb

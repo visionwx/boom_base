@@ -21,3 +21,12 @@ class VideoInboxNotExistException(Exception):
         self.videoInboxId = videoInboxId
     def __str__(self):
         print("videoInboxId:" + self.videoInboxId  + " not found")
+
+class DocumentNotExistException(Exception):
+    pass
+
+class CollectionRequireFieldNotProvideException(Exception):
+    def __init__(self, field):
+        self.field = field
+    def __str__(self):
+        print("Field:" + self.field  + " not provide")
