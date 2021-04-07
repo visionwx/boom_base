@@ -52,7 +52,7 @@ def getLogParaFromEnv():
             raiseExceptionIfNone=False),
         "logToConsole": getEnvPara('log_to_console', default=True,
             raiseExceptionIfNone=False),
-        "backCounts": getEnvPara('back_counts', default=1024*1024,
+        "backupCount": getEnvPara('backup_count', default=1024*1024,
             raiseExceptionIfNone=False),
         "maxBytes": getEnvPara('max_bytes', default=5,
             raiseExceptionIfNone=False),
