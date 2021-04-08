@@ -45,3 +45,6 @@ class TokenNotProvideException(Exception):
 
 class PhoneCodeVerifyFailedException(Exception):
     pass
+
+class SendSmsCodeFailedException(Exception):
+    pass
