@@ -24,7 +24,7 @@ setup(
     author=about['__author__'],
     author_email=about['__author_email__'],
     url=about['__url__'],
-    packages=['boom_base', 'boom_base.model'],
+    packages=['boom_base', 'boom_base.model', 'boom_base.flask'],
     include_package_data=True,
     python_requires=">=3.7.*",
     install_requires=['flask','pymongo'],
