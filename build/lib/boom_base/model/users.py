@@ -54,7 +54,7 @@ class Tokens(Collection):
             "token": str(uuid.uuid1()),
             "refreshToken": str(uuid.uuid1()),
             "expireTime": (time.time() + expireInSeconds) * 1000,
-            "userId": userId
+            "userId": userId,
         }
         tokenId = cls.create(**token)
         return token

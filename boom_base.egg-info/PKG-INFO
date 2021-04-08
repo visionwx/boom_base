@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: boom-base
-Version: 0.1.10
+Version: 0.1.12
 Summary: boom base package
 Home-page: https://www.visionwx.com
 Author: VisionWX
@@ -25,6 +25,8 @@ Description: ## Boom Base
         
         ## Change
         #### 2021-04-08
+        - 【新增】新增 PhoneCodeVerifyFailedException
+        - 【新增】增加flask模块
         - 【修复】parameters.getEnvPara 参数default拼写错误
         - 【优化】增加api_calls 日志
         - 【新增】增加api_calls apiCallRecord装饰器

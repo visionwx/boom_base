@@ -17,6 +17,7 @@ from boom_base import *
 
 ## Change
 #### 2021-04-08
+- 【新增】SendSmsCodeFailedException
 - 【新增】新增 PhoneCodeVerifyFailedException
 - 【新增】增加flask模块
 - 【修复】parameters.getEnvPara 参数default拼写错误
