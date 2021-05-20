@@ -1,3 +1,4 @@
+from functools import wraps, partial
 from flask import request
 from boom_base.model.users import Tokens
 from boom_base.exception import TokenNotProvideException
@@ -8,6 +9,22 @@ def verifyToken():
         raise TokenNotProvideException()
     userId = Tokens.verifyToken(_token)
     return userId
+
+def loginRequired(func=None):
+    if func is None:
+        return partial(loginRequired)
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print("verify user token")
+        userId = verifyToken()
+        kwargs["userId"] = userId
+        return func(*args, **kwargs)
+    return wrapper
+
+# @loginRequired()
+# def test(userId):
+#     print("test")
+#     print("userId=" + userId)
 
 # @wraps(func)
 # def wrapper(*args, **kwargs):

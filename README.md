@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-05-20
+- 【新增】flask新增view基类，auth增加验证token装饰函数
+
 #### 2021-04-08
 - 【新增】SendSmsCodeFailedException
 - 【新增】新增 PhoneCodeVerifyFailedException
