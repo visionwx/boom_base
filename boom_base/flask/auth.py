@@ -10,6 +10,7 @@ def verifyToken():
     userId = Tokens.verifyToken(_token)
     return userId
 
+
 def loginRequired(func=None):
     if func is None:
         return partial(loginRequired)
