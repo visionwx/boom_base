@@ -1,5 +1,6 @@
 import json
 from flask import request, Blueprint
+from boom_base.flask import auth
 from boom_base.model.base import Collection
 from boom_base.flask.request_parser import (
     getBodyParaFromRequestInDict, 
@@ -168,7 +169,7 @@ class ModelView():
 
         return result
 
-    def list(self):
+    def list(self, condition=None):
         try:
             # 获取用户id
             #userId = auth.verifyToken()
@@ -184,7 +185,7 @@ class ModelView():
 
             # 查询数据
             datas = self.MODEL.list(
-                condition = None,
+                condition = condition,
                 after = after,
                 limit = limit
             )
@@ -195,3 +196,13 @@ class ModelView():
             result = ResponseResult.failed(message=str(e))
 
         return result
+
+# # 针对前端正常用户的model view, 要求用户必须登录
+# # create/get/update/delete/list将检查 userId
+# class LoginRequiredModelView(ModelView):
+#     @auth.loginRequired()
+#     def create(self, userId):
+#         # 获取body参数
+#         bodyPara = getBodyParaFromRequestInDict()
+#         userIdPara = getParaFromBody("userId", bodyPara)
+#         return super().create()
