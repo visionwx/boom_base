@@ -144,3 +144,42 @@ class Collection:
             datas.append(vd)
 
         return datas
+    
+    @classmethod
+    def aggregate(cls, aggregation = None, 
+        condition = None, 
+        after = None, limit = None, 
+        filter = None):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        datas = []
+
+        # match condition
+        conditions = {}
+        if condition is not None:
+            conditions.update(condition)
+        
+        # after指定时间之后的tiems
+        if after is None:
+            after = time.time() * 1000
+        conditions.update({"metadata.createTime": { "$lt": after }})
+        
+        # limit
+        if limit is None:
+            limit = cls.LIMIT
+        
+        # compose aggregation
+        aggregations = [
+            {"$match": conditions},
+            {"$sort": {"metadata.updateTime": -1}},
+            {"$limit": limit},
+        ]
+        if aggregation is not None:
+            aggregations = aggregations + aggregation
+        
+        # perform aggregation operation
+        for data in DB.aggregate(aggregations):
+            datas.append(data)
+
+        return datas

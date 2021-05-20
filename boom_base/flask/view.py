@@ -26,6 +26,13 @@ class ResponseResult():
 class ModelView():
     MODEL:Collection = None
 
+    # 高级聚合查询语句，用于list接口
+    AGGREGATIONS = {}
+    def registerAggregation(self, listType, aggregationList):
+        if type(aggregationList) is not list:
+            raise Exception("aggregation type error, must be list")
+        self.AGGREGATIONS[listType] = aggregationList
+        
     def __init__(self, app:Blueprint):
         self.app = app
         self.registerView()
@@ -171,24 +178,37 @@ class ModelView():
 
     def list(self, condition=None):
         try:
-            # 获取用户id
-            #userId = auth.verifyToken()
+            print(request.args)
 
             # 获取body参数
             bodyPara = getBodyParaFromRequestInDict()
             
             # 获取指定字段参数值
-            after = getParaFromBody("after", bodyPara, 
+            listType = getParaFromBody("type", request.args, 
+                defaultValue="0",
                 raiseExceptionIfNone=False)
-            limit = getParaFromBody("limit", bodyPara, 
+            after = getParaFromBody("after", request.args, 
+                raiseExceptionIfNone=False)
+            limit = getParaFromBody("limit", request.args, 
                 raiseExceptionIfNone=False)
 
+            # 检查是否有aggregation
+            aggregation = self.AGGREGATIONS.get(listType, None)
+
             # 查询数据
-            datas = self.MODEL.list(
-                condition = condition,
-                after = after,
-                limit = limit
-            )
+            if aggregation is None:
+                datas = self.MODEL.list(
+                    condition = condition,
+                    after = after,
+                    limit = limit
+                )
+            else:
+                datas = self.MODEL.aggregate(
+                    aggregation = aggregation,
+                    condition = condition,
+                    after = after,
+                    limit = limit
+                )
             
             result = ResponseResult.success(data=datas)
 
