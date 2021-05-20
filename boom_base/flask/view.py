@@ -29,6 +29,8 @@ class ModelView():
     # 高级聚合查询语句，用于list接口
     AGGREGATIONS = {}
     def registerAggregation(self, listType, aggregationList):
+        if listType == "0":
+            raise Exception("listType 0 is not allowed")
         if type(aggregationList) is not list:
             raise Exception("aggregation type error, must be list")
         self.AGGREGATIONS[listType] = aggregationList
@@ -178,8 +180,6 @@ class ModelView():
 
     def list(self, condition=None):
         try:
-            print(request.args)
-
             # 获取body参数
             bodyPara = getBodyParaFromRequestInDict()
             
@@ -209,7 +209,6 @@ class ModelView():
                     after = after,
                     limit = limit
                 )
-                print(datas)
             
             result = ResponseResult.success(data=datas)
 

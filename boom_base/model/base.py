@@ -180,6 +180,8 @@ class Collection:
         
         # perform aggregation operation
         for data in DB.aggregate(aggregations):
+            if "_id" in data.keys():
+                data["_id"] = str(data["_id"])
             datas.append(data)
 
         return datas
