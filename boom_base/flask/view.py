@@ -5,6 +5,23 @@ from boom_base.flask.request_parser import (
     getBodyParaFromRequestInDict, 
     getParaFromBody)
 
+class ResponseResult():
+    @staticmethod
+    def success(status=1, message="success", data=None):
+        return json.dumps({
+            'status': status, 
+            'message': message, 
+            'data': data 
+        })
+
+    @staticmethod
+    def failed(status=0, message="Failed", data=None):
+        return json.dumps({
+            'status': status, 
+            'message': message, 
+            'data': data 
+        })
+
 class ModelView():
     MODEL:Collection = None
 
@@ -93,14 +110,12 @@ class ModelView():
             # 创建记录
             _id = self.MODEL.create(**modelData)
             
-            result = {'status': 1, 'message': 'success', 
-                'data': _id }
+            result = ResponseResult.success(data=_id)
 
         except Exception as e:
-            result = {'status': 0, 'message': str(e), 
-                'data': None, }
+            result = ResponseResult.failed(message=str(e))
 
-        return json.dumps(result)
+        return result
 
     def update(self, _id):
         try:
@@ -116,14 +131,12 @@ class ModelView():
             # 创建记录
             self.MODEL.update(_id, **modelData)
             
-            result = {'status': 1, 'message': 'success', 
-                'data': None }
+            result = ResponseResult.success()
 
         except Exception as e:
-            result = {'status': 0, 'message': str(e), 
-                'data': None, }
+            result = ResponseResult.failed(message=str(e))
 
-        return json.dumps(result)
+        return result
 
     def get(self, _id):
         try:
@@ -133,14 +146,12 @@ class ModelView():
             # 创建记录
             data = self.MODEL.get(_id)
             
-            result = {'status': 1, 'message': 'success', 
-                'data': data }
+            result = ResponseResult.success(data=data)
 
         except Exception as e:
-            result = {'status': 0, 'message': str(e), 
-                'data': None, }
+            result = ResponseResult.failed(message=str(e))
 
-        return json.dumps(result)
+        return result
 
     def delete(self, _id):
         try:
@@ -150,14 +161,12 @@ class ModelView():
             # 创建记录
             data = self.MODEL.delete(_id)
             
-            result = {'status': 1, 'message': 'success', 
-                'data': data }
+            result = ResponseResult.success(data=data)
 
         except Exception as e:
-            result = {'status': 0, 'message': str(e), 
-                'data': None, }
+            result = ResponseResult.failed(message=str(e))
 
-        return json.dumps(result)
+        return result
 
     def list(self):
         try:
@@ -180,11 +189,9 @@ class ModelView():
                 limit = limit
             )
             
-            result = {'status': 1, 'message': 'success', 
-                'data': datas }
+            result = ResponseResult.success(data=data)
 
         except Exception as e:
-            result = {'status': 0, 'message': str(e), 
-                'data': None, }
+            result = ResponseResult.failed(message=str(e))
 
-        return json.dumps(result)
+        return result
