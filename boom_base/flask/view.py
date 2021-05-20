@@ -189,7 +189,7 @@ class ModelView():
                 limit = limit
             )
             
-            result = ResponseResult.success(data=data)
+            result = ResponseResult.success(data=datas)
 
         except Exception as e:
             result = ResponseResult.failed(message=str(e))
