@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-05-22
+- 【修复】modelView修复list获取参数异常bug
+
 #### 2021-05-20
 - 【新增】flask新增view基类，auth增加验证token装饰函数
 - 【新增】flask/view新增 ResponseResult类

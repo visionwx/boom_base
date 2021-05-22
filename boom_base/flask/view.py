@@ -181,7 +181,7 @@ class ModelView():
     def list(self, condition=None):
         try:
             # 获取body参数
-            bodyPara = getBodyParaFromRequestInDict()
+            # bodyPara = getBodyParaFromRequestInDict()
             
             # 获取指定字段参数值
             listType = getParaFromBody("type", request.args, 
