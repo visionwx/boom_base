@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-05-26
+- 【优化】modelView 增加traceBack
+
 #### 2021-05-22
 - 【修复】modelView修复list获取参数异常bug
 

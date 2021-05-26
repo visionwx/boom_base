@@ -1,4 +1,5 @@
 import json
+import traceback
 from flask import request, Blueprint
 from boom_base.flask import auth
 from boom_base.model.base import Collection
@@ -123,7 +124,8 @@ class ModelView():
             result = ResponseResult.success(data=_id)
 
         except Exception as e:
-            result = ResponseResult.failed(message=str(e))
+            print(traceback.format_exc())
+            result = ResponseResult.failed(message=type(e).__name__)
 
         return result
 
@@ -144,7 +146,8 @@ class ModelView():
             result = ResponseResult.success()
 
         except Exception as e:
-            result = ResponseResult.failed(message=str(e))
+            print(traceback.format_exc())
+            result = ResponseResult.failed(message=type(e).__name__)
 
         return result
 
@@ -159,7 +162,8 @@ class ModelView():
             result = ResponseResult.success(data=data)
 
         except Exception as e:
-            result = ResponseResult.failed(message=str(e))
+            print(traceback.format_exc())
+            result = ResponseResult.failed(message=type(e).__name__)
 
         return result
 
@@ -174,7 +178,8 @@ class ModelView():
             result = ResponseResult.success(data=data)
 
         except Exception as e:
-            result = ResponseResult.failed(message=str(e))
+            print(traceback.format_exc())
+            result = ResponseResult.failed(message=type(e).__name__)
 
         return result
 
@@ -213,7 +218,8 @@ class ModelView():
             result = ResponseResult.success(data=datas)
 
         except Exception as e:
-            result = ResponseResult.failed(message=str(e))
+            print(traceback.format_exc())
+            result = ResponseResult.failed(message=type(e).__name__)
 
         return result
 
