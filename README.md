@@ -9,7 +9,7 @@
 
 ## Usage
 ```
-pip install git+https://oauth2:p_xB46CAsVJFz8PsDrpk@gitlab.com/visionwx/boom_base.git
+pip3 install git+https://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@github.com/visionwx/boom_base.git
 
 python
 from boom_base import *
