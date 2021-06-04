@@ -189,7 +189,7 @@ class Collection:
     @classmethod
     def aggregateGet(cls, id, aggregation = None):
         aggregations = [
-            {"$match": {"_id": {"$toObjectId": id}}}
+            {"$match": {"_id": bson.ObjectId(id)}}
         ]
         if aggregation is not None:
             aggregations = aggregations + aggregation
