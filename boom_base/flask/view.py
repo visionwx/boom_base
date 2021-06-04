@@ -167,6 +167,9 @@ class ModelView():
             else:
                 datas = self.MODEL.aggregate(
                     aggregation = aggregation,
+                    condition = {
+                        "_id": {"$toObjectId": _id}
+                    },
                 )
                 if len(datas) > 0:
                     data = datas[0]
