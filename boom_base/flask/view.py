@@ -160,16 +160,19 @@ class ModelView():
 
             # 检查是否有aggregation
             aggregation = self.AGGREGATIONS.get(listType, None)
+            matchCond = [{
+                "$match": {
+                    "_id": {"$toObjectId": _id}
+                }
+            }]
 
             # 查询记录
             if aggregation is None:
                 data = self.MODEL.get(_id)
             else:
+                aggregation = matchCond + aggregation
                 datas = self.MODEL.aggregate(
                     aggregation = aggregation,
-                    condition = {
-                        "_id": {"$toObjectId": _id}
-                    },
                 )
                 if len(datas) > 0:
                     data = datas[0]
