@@ -185,3 +185,23 @@ class Collection:
             datas.append(data)
 
         return datas
+    
+    @classmethod
+    def aggregateGet(cls, id, aggregation = None):
+        aggregations = [
+            {"$match": {"_id": {"$toObjectId": id}}}
+        ]
+        if aggregation is not None:
+            aggregations = aggregations + aggregation
+        # perform aggregation operation
+        result = None
+        datas = []
+        for data in DB.aggregate(aggregations):
+            if "_id" in data.keys():
+                data["_id"] = str(data["_id"])
+            datas.append(data)
+        if len(datas) > 0:
+            result = datas[0]
+
+        return result
+
