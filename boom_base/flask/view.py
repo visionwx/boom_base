@@ -153,11 +153,25 @@ class ModelView():
 
     def get(self, _id):
         try:
-            # 获取用户id
-            #userId = auth.verifyToken()
+            # 提取高级查询参数
+            listType = getParaFromBody("type", request.args, 
+                defaultValue="0",
+                raiseExceptionIfNone=False)
 
-            # 创建记录
-            data = self.MODEL.get(_id)
+            # 检查是否有aggregation
+            aggregation = self.AGGREGATIONS.get(listType, None)
+
+            # 查询记录
+            if aggregation is None:
+                data = self.MODEL.get(_id)
+            else:
+                datas = self.MODEL.aggregate(
+                    aggregation = aggregation,
+                )
+                if len(datas) > 0:
+                    data = datas[0]
+                else:
+                    data = None
             
             result = ResponseResult.success(data=data)
 
