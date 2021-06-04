@@ -18,6 +18,7 @@ from boom_base import *
 ## Change
 #### 2021-06-04
 - 【优化】flask/view.py modelView get接口增加高级查询功能
+- 【修复】flask/view.py modelView get接口BUG修复
 
 #### 2021-05-26
 - 【优化】modelView 增加traceBack
