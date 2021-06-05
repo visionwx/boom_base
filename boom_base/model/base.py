@@ -188,6 +188,8 @@ class Collection:
     
     @classmethod
     def aggregateGet(cls, id, aggregation = None):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
         aggregations = [
             {"$match": {"_id": bson.ObjectId(id)}}
         ]
