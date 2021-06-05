@@ -6,6 +6,10 @@ from boom_base.model.base import Collection
 from boom_base.flask.request_parser import (
     getBodyParaFromRequestInDict, 
     getParaFromBody)
+from boom_base.logger import getLoggerInstance
+
+LOG = getLoggerInstance()
+TAG = "boom_base.flask.view"
 
 class ResponseResult():
     @staticmethod
@@ -124,7 +128,7 @@ class ModelView():
             result = ResponseResult.success(data=_id)
 
         except Exception as e:
-            print(traceback.format_exc())
+            LOG.info(TAG, traceback.format_exc())
             result = ResponseResult.failed(message=type(e).__name__)
 
         return result
@@ -146,7 +150,7 @@ class ModelView():
             result = ResponseResult.success()
 
         except Exception as e:
-            print(traceback.format_exc())
+            LOG.info(TAG, traceback.format_exc())
             result = ResponseResult.failed(message=type(e).__name__)
 
         return result
@@ -173,7 +177,7 @@ class ModelView():
             result = ResponseResult.success(data=data)
 
         except Exception as e:
-            print(traceback.format_exc())
+            LOG.info(TAG, traceback.format_exc())
             result = ResponseResult.failed(message=type(e).__name__)
 
         return result
@@ -189,7 +193,7 @@ class ModelView():
             result = ResponseResult.success(data=data)
 
         except Exception as e:
-            print(traceback.format_exc())
+            LOG.info(TAG, traceback.format_exc())
             result = ResponseResult.failed(message=type(e).__name__)
 
         return result
@@ -229,7 +233,7 @@ class ModelView():
             result = ResponseResult.success(data=datas)
 
         except Exception as e:
-            print(traceback.format_exc())
+            LOG.info(TAG, traceback.format_exc())
             result = ResponseResult.failed(message=type(e).__name__)
 
         return result
