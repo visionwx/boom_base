@@ -90,6 +90,37 @@ class Collection:
             )
 
     @classmethod
+    def update_v2(cls, _id, type="set", **kwargs):
+        # 支持三种类型的update
+        # set, inc, push, addToSet
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        update_data = {}
+        for k,v in kwargs.items():
+            if k not in cls.FIELDS:
+                raise Exception("updateFieldNotSupported")
+            update_data[k] = v
+
+        if type == "set":
+            update_data = {"$set": update_data}
+        elif type == "inc":
+            update_data = {"$inc": update_data}
+        elif type == "push":
+            update_data = {"$push": update_data}
+        elif type == "addToSet":
+            update_data = {"$addToSet": update_data}
+        else:
+            update_data = {"$set": update_data}
+
+        if update_data:
+            update_data["metadata.updateTime"] = time.time() * 1000
+            DB.update_one(
+                { "_id": bson.ObjectId(_id) },
+                update_data
+            )
+
+    @classmethod
     def delete(cls, id):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)

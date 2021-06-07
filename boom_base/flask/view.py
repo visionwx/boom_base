@@ -144,8 +144,13 @@ class ModelView():
             # 获取指定字段参数值
             modelData = self.getParaForUpdate(bodyPara)
 
+            # 提取高级查询参数
+            updateType = getParaFromBody("type", request.args, 
+                defaultValue="set",
+                raiseExceptionIfNone=False)
+
             # 创建记录
-            self.MODEL.update(_id, **modelData)
+            self.MODEL.update_v2(_id, updateType, **modelData)
             
             result = ResponseResult.success()
 
