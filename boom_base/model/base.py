@@ -103,6 +103,7 @@ class Collection:
             update_data[k] = v
 
         if type == "set":
+            update_data["metadata.updateTime"] = time.time() * 1000
             update_data = {"$set": update_data}
         elif type == "inc":
             update_data = {"$inc": update_data}
@@ -111,10 +112,10 @@ class Collection:
         elif type == "addToSet":
             update_data = {"$addToSet": update_data}
         else:
+            update_data["metadata.updateTime"] = time.time() * 1000
             update_data = {"$set": update_data}
 
         if update_data:
-            update_data["metadata.updateTime"] = time.time() * 1000
             DB.update_one(
                 { "_id": bson.ObjectId(_id) },
                 update_data
