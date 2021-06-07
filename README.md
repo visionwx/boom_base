@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-06-08
+- 【新增】model/base.py update_v2接口新增，支持inc/push/addToSet等高级更新；flask.view update接口同步更新
+
 #### 2021-06-05
 - 【修复】model/base.py aggregateGet接口 bug 修复
 - 【优化】自定义exception全部实现__str__接口
