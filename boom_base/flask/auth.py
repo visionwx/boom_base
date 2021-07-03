@@ -38,7 +38,7 @@ def verifyUserToken(func=None, isLoginRequired=True):
             kwargs["userId"] = userId
             return func(*args, **kwargs)
         except Exception as e:
-            if isLoginRequired:
+            if not isLoginRequired:
                 kwargs["userId"] = None
                 return func(*args, **kwargs)
             else:
