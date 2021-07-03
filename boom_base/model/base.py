@@ -9,6 +9,14 @@ def getCollectRef(collectionName):
     MDB = getMongoInstance()
     return MDB.db[collectionName]
 
+class CollectionUpdateType:
+    SET        = "set"
+    INC        = "inc"
+    PUSH       = "push"
+    PULL       = "pull"
+    ADD_TO_SET = "addToSet"
+
+
 class Collection:
     # 共有字段
     # metadata = { createTime, updateTime, deleteTime,} 10位时间戳
@@ -102,14 +110,16 @@ class Collection:
                 raise Exception("updateFieldNotSupported")
             update_data[k] = v
 
-        if type == "set":
+        if type == CollectionUpdateType.SET:
             update_data["metadata.updateTime"] = time.time() * 1000
             update_data = {"$set": update_data}
-        elif type == "inc":
+        elif type == CollectionUpdateType.INC:
             update_data = {"$inc": update_data}
-        elif type == "push":
+        elif type == CollectionUpdateType.PUSH:
             update_data = {"$push": update_data}
-        elif type == "addToSet":
+        elif type == CollectionUpdateType.PULL:
+            update_data = {"$pull": update_data}
+        elif type == CollectionUpdateType.ADD_TO_SET:
             update_data = {"$addToSet": update_data}
         else:
             update_data["metadata.updateTime"] = time.time() * 1000
