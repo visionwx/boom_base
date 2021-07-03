@@ -84,3 +84,14 @@ class SendSmsCodeFailedException(Exception):
     ID = EXCEPTION_TYPE_ID.AUTH + "0005"
     def __str__(self):
         return "SendSmsCodeFailedException"
+
+
+class ShareTimeExpireException(Exception):
+    ID = EXCEPTION_TYPE_ID.DB + "0006"
+    def __str__(self):
+        return "ShareTimeExpireException"
+
+class ShareCodeNotMatchException(Exception):
+    ID = EXCEPTION_TYPE_ID.DB + "0007"
+    def __str__(self):
+        return "ShareCodeNotMatchException"
