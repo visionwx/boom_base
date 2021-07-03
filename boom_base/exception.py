@@ -4,6 +4,12 @@ class ParametersNotProvideException(Exception):
     def __str__(self):
         return "parameter:" + self.fieldName  + " not found"
 
+class ParametersIllegalException(Exception):
+    def __init__(self, fieldName):
+        self.fieldName = fieldName
+    def __str__(self):
+        return "parameter:" + self.fieldName  + " illegal"
+
 class VideoNotExistException(Exception):
     def __init__(self, videoId):
         self.videoId = videoId
