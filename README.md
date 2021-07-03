@@ -21,6 +21,7 @@ from boom_base import *
 - 【新增】flask/request_parser.py 新增 verifyPara参数
 - 【新增】model/base.py 新增CollectionUpdateType, 以及新增exception
 - 【新增】exception.py 新增share相关的exception
+- 【修复】verifyUserToken bug 修复
 
 #### 2021-06-08
 - 【新增】model/base.py update_v2接口新增，支持inc/push/addToSet等高级更新；flask.view update接口同步更新

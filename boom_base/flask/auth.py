@@ -28,7 +28,7 @@ def loginRequired(func=None):
 
 def verifyUserToken(func=None, isLoginRequired=True):
     if func is None:
-        return partial(loginRequired, 
+        return partial(verifyUserToken, 
             isLoginRequired=isLoginRequired)
     @wraps(func)
     def wrapper(*args, **kwargs):
