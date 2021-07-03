@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-03
+- 【新增】flask/auth.py 新增 verifyUserToken装饰函数
+
 #### 2021-06-08
 - 【新增】model/base.py update_v2接口新增，支持inc/push/addToSet等高级更新；flask.view update接口同步更新
 

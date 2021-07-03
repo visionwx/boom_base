@@ -26,6 +26,25 @@ def loginRequired(func=None):
             return ResponseResult.failed(message=str(e))
     return wrapper
 
+def verifyUserToken(func=None, isLoginRequired=True):
+    if func is None:
+        return partial(loginRequired, 
+            isLoginRequired=isLoginRequired)
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        try:
+            print("verify user token")
+            userId = verifyToken()
+            kwargs["userId"] = userId
+            return func(*args, **kwargs)
+        except Exception as e:
+            if isLoginRequired:
+                kwargs["userId"] = None
+                return func(*args, **kwargs)
+            else:
+                return ResponseResult.failed(message=str(e))
+    return wrapper
+
 # @loginRequired()
 # def test(userId):
 #     print("test")
