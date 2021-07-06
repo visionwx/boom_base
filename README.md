@@ -19,6 +19,7 @@ from boom_base import *
 #### 2021-07-06
 - 【新增】新增 dataModel
 - 【优化】调整 view.py _type_,_after_,_limit_参数格式
+- 【优化】更新版本
 
 #### 2021-07-03
 - 【新增】flask/auth.py 新增 verifyUserToken装饰函数
