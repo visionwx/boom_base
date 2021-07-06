@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-06
+- 【新增】新增 dataModel
+
 #### 2021-07-03
 - 【新增】flask/auth.py 新增 verifyUserToken装饰函数
 - 【新增】flask/request_parser.py 新增 verifyPara参数
