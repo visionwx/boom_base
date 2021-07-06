@@ -265,7 +265,7 @@ class ModelView():
     def get(self, _id):
         try:
             # 提取高级查询参数
-            listType = getParaFromBody("type", request.args, 
+            listType = getParaFromBody("_type_", request.args, 
                 defaultValue="0",
                 raiseExceptionIfNone=False)
 
@@ -309,16 +309,16 @@ class ModelView():
         try:
 
             # 获取指定字段参数值
-            listType = getParaFromBody("type", request.args, 
+            listType = getParaFromBody("_type_", request.args, 
                 defaultValue="0",
                 raiseExceptionIfNone=False)
-            after = getParaFromBody("after", request.args, 
+            after = getParaFromBody("_after_", request.args, 
                 raiseExceptionIfNone=False)
-            limit = getParaFromBody("limit", request.args, 
+            limit = getParaFromBody("_limit_", request.args, 
                 raiseExceptionIfNone=False)
             
             # 提取condition参数
-            condition = self.parseListPara(getBodyParaFromRequestInDict())
+            condition = self.parseListPara(request.args)
 
             # 检查是否有aggregation
             aggregation = self.AGGREGATIONS.get(listType, None)
