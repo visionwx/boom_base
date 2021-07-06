@@ -262,7 +262,7 @@ class ModelView():
 
         return result
 
-    def get(self, _id):
+    def get(self, _id, aggregation=None):
         try:
             # 提取高级查询参数
             listType = getParaFromBody("_type_", request.args, 
@@ -270,7 +270,8 @@ class ModelView():
                 raiseExceptionIfNone=False)
 
             # 检查是否有aggregation
-            aggregation = self.AGGREGATIONS.get(listType, None)
+            if aggregation is None:
+                aggregation = self.AGGREGATIONS.get(listType, None)
 
             # 查询记录
             if aggregation is None:
@@ -305,7 +306,7 @@ class ModelView():
 
         return result
 
-    def list(self, condition=None):
+    def list(self, condition=None, aggregation=None):
         try:
 
             # 获取指定字段参数值
@@ -317,11 +318,13 @@ class ModelView():
             limit = getParaFromBody("_limit_", request.args, 
                 raiseExceptionIfNone=False)
             
-            # 提取condition参数
-            condition = self.parseListPara(request.args)
+            # 检查是否有指定 condition, 否则从参数提取condition参数
+            if condition is None:
+                condition = self.parseListPara(request.args)
 
-            # 检查是否有aggregation
-            aggregation = self.AGGREGATIONS.get(listType, None)
+            # 检查是否有 指定aggregation
+            if aggregation is None:
+                aggregation = self.AGGREGATIONS.get(listType, None)
 
             # 查询数据
             if aggregation is None:
