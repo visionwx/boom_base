@@ -1,9 +1,9 @@
 from .base import Collection
 from functools import wraps, partial
 import time
-from boom_base.logger import getLoggerInstance
+# from boom_base.logger import getLoggerInstance
 
-LOG = getLoggerInstance()
+# LOG = getLoggerInstance()
 
 class ApiCallsCollection(Collection):
     NAME = "apiCalls"
@@ -31,7 +31,6 @@ def apiCallRecord(func=None, apiPath=None, extraData=None):
             return func(*args, **kwargs)
         except Exception as e:
             print(str(e))
-            LOG.error("apiCallRecorder", str(e))
             return func(*args, **kwargs)
     return wrapper
 

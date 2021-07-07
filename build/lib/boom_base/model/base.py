@@ -195,7 +195,7 @@ class Collection:
 
     @classmethod
     def list(cls, condition = None, 
-        after = None, limit = None, 
+        after = None, limit = None, sort = -1,
         filter = None):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)
@@ -221,7 +221,7 @@ class Collection:
                 filter
             ).sort(
                 "metadata.createTime", 
-                pymongo.DESCENDING
+                sort
             ).limit(limit):
             vd["_id"] = str(vd["_id"])
             datas.append(vd)
@@ -231,7 +231,7 @@ class Collection:
     @classmethod
     def aggregate(cls, aggregation = None, 
         condition = None, 
-        after = None, limit = None, 
+        after = None, limit = None, sort = -1,
         filter = None):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)
@@ -255,7 +255,7 @@ class Collection:
         # compose aggregation
         aggregations = [
             {"$match": conditions},
-            {"$sort": {"metadata.updateTime": -1}},
+            {"$sort": {"metadata.createTime": sort}},
             {"$limit": limit},
         ]
         if aggregation is not None:

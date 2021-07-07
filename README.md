@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-07
+- 【新增】view.py list接口新增_sort_参数，-1降序，1升序。修复 limit 参数类型错误bug
+
 #### 2021-07-06
 - 【新增】新增 dataModel
 - 【优化】调整 view.py _type_,_after_,_limit_参数格式
