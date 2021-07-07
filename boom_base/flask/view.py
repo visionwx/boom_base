@@ -210,6 +210,44 @@ class ModelView():
             para = None
         return para
         
+    def parseLimitPara(self):
+        limit = getParaFromBody("_limit_", request.args,
+            defaultValue=50, 
+            raiseExceptionIfNone=False)
+        if limit is not None:
+            limit = int(limit)
+        if limit <= 0:
+            limit = 50
+        return limit
+
+    def parseAfterPara(self):
+        after = getParaFromBody("_after_", request.args,
+            raiseExceptionIfNone=False)
+        if after is not None:
+            after = int(after)
+        if after and after <= 0:
+            after = None
+        return after
+
+    def parseSortPara(self):
+        sort = getParaFromBody("_sort_", request.args,
+            defaultValue=-1,
+            raiseExceptionIfNone=False)
+        if sort is not None:
+            sort = int(sort)
+        if sort not in [-1,1]:
+            sort = -1
+        return sort
+
+    def parseTypePara(self):
+        listType = getParaFromBody("_type_", request.args,
+            defaultValue="0",
+            raiseExceptionIfNone=False)
+        if listType is not None:
+            listType = str(listType)
+        if listType not in self.AGGREGATIONS.keys():
+            listType = "0"
+        return listType
 
     def create(self):
         try:
@@ -310,13 +348,10 @@ class ModelView():
         try:
 
             # 获取指定字段参数值
-            listType = getParaFromBody("_type_", request.args, 
-                defaultValue="0",
-                raiseExceptionIfNone=False)
-            after = getParaFromBody("_after_", request.args, 
-                raiseExceptionIfNone=False)
-            limit = getParaFromBody("_limit_", request.args, 
-                raiseExceptionIfNone=False)
+            listType = self.parseTypePara()
+            after    = self.parseAfterPara()
+            limit    = self.parseLimitPara()
+            sort     = self.parseSortPara()
             
             # 检查是否有指定 condition, 否则从参数提取condition参数
             if condition is None:
@@ -331,14 +366,16 @@ class ModelView():
                 datas = self.MODEL.list(
                     condition = condition,
                     after = after,
-                    limit = limit
+                    limit = limit,
+                    sort  = sort,
                 )
             else:
                 datas = self.MODEL.aggregate(
                     aggregation = aggregation,
                     condition = condition,
                     after = after,
-                    limit = limit
+                    limit = limit,
+                    sort  = sort,
                 )
             
             result = ResponseResult.success(data=datas)
