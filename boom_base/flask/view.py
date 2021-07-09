@@ -268,7 +268,11 @@ class ModelView():
 
         except Exception as e:
             print(traceback.format_exc())
-            result = ResponseResult.failed(message=type(e).__name__)
+            if type(e) == CollectionFieldTypeException:
+                err = str(e)
+            else:
+                err = type(e).__name__
+            result = ResponseResult.failed(message=err)
 
         return result
 

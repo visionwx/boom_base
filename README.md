@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-10
+- 【优化】view.py create 接口exception处理
+
 #### 2021-07-07
 - 【新增】view.py list接口新增_sort_参数，-1降序，1升序。修复 limit 参数类型错误bug
 
