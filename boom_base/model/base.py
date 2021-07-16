@@ -210,6 +210,9 @@ class Collection:
         # limit
         if limit is None:
             limit = cls.LIMIT
+        # list接口下，limit 小于等于0 不表示不限制limit
+        if limit <= 0:
+            limit = cls.LIMIT
         
         # after指定时间之后的tiems
         if after is not None:
