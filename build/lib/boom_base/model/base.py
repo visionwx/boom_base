@@ -82,7 +82,7 @@ class Collection:
     HIDDEN_FIELDS = []
 
     # limit 最大查询返回items数量
-    LIMIT = 50
+    LIMIT = 200
     
     # 构建函数
     def __init__(self):
@@ -210,6 +210,9 @@ class Collection:
         # limit
         if limit is None:
             limit = cls.LIMIT
+        # list接口下，limit 小于等于0 不表示不限制limit
+        if limit <= 0:
+            limit = cls.LIMIT
         
         # after指定时间之后的tiems
         if after is not None:
@@ -244,9 +247,8 @@ class Collection:
             conditions.update(condition)
         
         # after指定时间之后的tiems
-        if after is None:
-            after = time.time() * 1000
-        conditions.update({"metadata.createTime": { "$lt": after }})
+        if after is not None:
+            conditions.update({"metadata.createTime": { "$lt": after }})
         
         # limit
         if limit is None:
@@ -256,8 +258,13 @@ class Collection:
         aggregations = [
             {"$match": conditions},
             {"$sort": {"metadata.createTime": sort}},
-            {"$limit": limit},
         ]
+
+        # limit aggregation,指定-1 表示不做limit限制
+        if limit > 0:
+            aggregations = aggregations + [{"$limit": limit},]
+
+        # 加入自定义的aggregation
         if aggregation is not None:
             aggregations = aggregations + aggregation
         

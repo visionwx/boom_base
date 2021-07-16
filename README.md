@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-16
+- 【优化】model/base.py view.py 优化
+
 #### 2021-07-15
 - 【优化】model/base.py 优化aggregate接口 limit逻辑
 

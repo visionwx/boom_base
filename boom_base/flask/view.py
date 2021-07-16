@@ -216,8 +216,6 @@ class ModelView():
             raiseExceptionIfNone=False)
         if limit is not None:
             limit = int(limit)
-        if limit <= 0:
-            limit = 50
         return limit
 
     def parseAfterPara(self):

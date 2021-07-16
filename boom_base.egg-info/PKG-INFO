@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: boom-base
-Version: 0.1.42
+Version: 0.1.46
 Summary: boom base package
 Home-page: https://www.visionwx.com
 Author: VisionWX
@@ -24,6 +24,12 @@ Description: ## Boom Base
         ```
         
         ## Change
+        #### 2021-07-15
+        - 【优化】model/base.py 优化aggregate接口 limit逻辑
+        
+        #### 2021-07-10
+        - 【优化】view.py create 接口exception处理
+        
         #### 2021-07-07
         - 【新增】view.py list接口新增_sort_参数，-1降序，1升序。修复 limit 参数类型错误bug
         
