@@ -378,6 +378,7 @@ class ModelView():
                 datas = self.MODEL.list(
                     condition = condition,
                     after = after,
+                    before = before,
                     limit = limit,
                     sort  = sort,
                 )
@@ -386,6 +387,7 @@ class ModelView():
                     aggregation = aggregation,
                     condition = condition,
                     after = after,
+                    before = before,
                     limit = limit,
                     sort  = sort,
                 )
