@@ -273,6 +273,7 @@ class Collection:
             limit = cls.LIMIT
         
         # compose aggregation
+        # print(conditions)
         aggregations = [
             {"$match": conditions},
             {"$sort": {"metadata.createTime": sort}},
