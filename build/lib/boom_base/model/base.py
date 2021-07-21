@@ -195,7 +195,7 @@ class Collection:
 
     @classmethod
     def list(cls, condition = None, 
-        after = None, limit = None, sort = -1,
+        after = None, before = None, limit = None, sort = -1,
         filter = None):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)
@@ -207,7 +207,7 @@ class Collection:
         if condition is not None:
             conditions.update(condition)
 
-        # limit
+        # limit 如果不指定，则用默认的limit
         if limit is None:
             limit = cls.LIMIT
         # list接口下，limit 小于等于0 不表示不限制limit
@@ -215,10 +215,19 @@ class Collection:
             limit = cls.LIMIT
         
         # after指定时间之后的tiems
+        createTimeCond = {"metadata.createTime": {}}
         if after is not None:
-            conditions.update({"metadata.createTime": { "$lt": after }})
+            # conditions.update({"metadata.createTime": { "$lte": after }})
+            createTimeCond["metadata.createTime"].update({ "$lte": after })
+        # before指定时间之后的tiems
+        if before is not None:
+            # conditions.update({"metadata.createTime": { "$gte": before }}) 
+            createTimeCond["metadata.createTime"].update({ "$gte": before })
+        # after / before
+        if after is not None or before is not None:
+            conditions.update(createTimeCond)
         
-        # print(conditions)
+        print(conditions)
         for vd in DB.find(
                 conditions, 
                 filter
@@ -234,7 +243,7 @@ class Collection:
     @classmethod
     def aggregate(cls, aggregation = None, 
         condition = None, 
-        after = None, limit = None, sort = -1,
+        after = None, before = None, limit = None, sort = -1,
         filter = None):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)
@@ -247,14 +256,24 @@ class Collection:
             conditions.update(condition)
         
         # after指定时间之后的tiems
+        createTimeCond = {"metadata.createTime": {}}
         if after is not None:
-            conditions.update({"metadata.createTime": { "$lt": after }})
+            # conditions.update({"metadata.createTime": { "$lte": after }})
+            createTimeCond["metadata.createTime"].update({ "$lte": after })
+        # before指定时间之后的tiems
+        if before is not None:
+            # conditions.update({"metadata.createTime": { "$gte": before }}) 
+            createTimeCond["metadata.createTime"].update({ "$gte": before })
+        # after / before
+        if after is not None or before is not None:
+            conditions.update(createTimeCond)
         
         # limit
         if limit is None:
             limit = cls.LIMIT
         
         # compose aggregation
+        print(conditions)
         aggregations = [
             {"$match": conditions},
             {"$sort": {"metadata.createTime": sort}},

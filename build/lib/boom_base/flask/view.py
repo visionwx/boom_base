@@ -226,6 +226,15 @@ class ModelView():
         if after and after <= 0:
             after = None
         return after
+    
+    def parseBeforePara(self):
+        before = getParaFromBody("_before_", request.args,
+            raiseExceptionIfNone=False)
+        if before is not None:
+            before = int(before)
+        if before and before <= 0:
+            before = None
+        return before
 
     def parseSortPara(self):
         sort = getParaFromBody("_sort_", request.args,
@@ -352,6 +361,7 @@ class ModelView():
             # 获取指定字段参数值
             listType = self.parseTypePara()
             after    = self.parseAfterPara()
+            before   = self.parseBeforePara()
             limit    = self.parseLimitPara()
             sort     = self.parseSortPara()
             
@@ -368,6 +378,7 @@ class ModelView():
                 datas = self.MODEL.list(
                     condition = condition,
                     after = after,
+                    before = before,
                     limit = limit,
                     sort  = sort,
                 )
@@ -376,6 +387,7 @@ class ModelView():
                     aggregation = aggregation,
                     condition = condition,
                     after = after,
+                    before = before,
                     limit = limit,
                     sort  = sort,
                 )
