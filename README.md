@@ -18,6 +18,7 @@ from boom_base import *
 ## Change
 #### 2021-07-21
 - 【新增】model/base.py view.py 增加get参数 _before_
+- 【优化】删除logger
 
 #### 2021-07-16
 - 【优化】model/base.py view.py 优化
