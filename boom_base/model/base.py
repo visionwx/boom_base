@@ -336,6 +336,46 @@ class Collection:
     def findAndUpdate(cls, condition, updateData):
         pass
 
+    @classmethod
+    def softDelete(cls, id):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        DB.update_one(
+            { "_id": bson.ObjectId(id) },
+            { "$set": {
+                "isDelete": True,
+                "metadata.deleteTime": time.time() * 1000
+            }}
+        )
+
+    @classmethod
+    def recover(cls, id):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        DB.update_one(
+            { "_id": bson.ObjectId(id) },
+            { "$set": {
+                "isDelete": False,
+                "metadata.deleteTime": None
+            }}
+        )
+    
+    @classmethod
+    def findAndDelete(cls, condition):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        # 执行删除
+        data = DB.find_one(condition)
+        if data is not None:
+            DB.delete_one(
+                condition
+            )
+        
+
+
 
 
 # class CollectionNew:

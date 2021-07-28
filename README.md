@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-07-28
+- 【新增】model/base.py 增加softDelete和recover接口, findAndDelete接口
+
 #### 2021-07-21
 - 【新增】model/base.py view.py 增加get参数 _before_
 - 【优化】删除logger
