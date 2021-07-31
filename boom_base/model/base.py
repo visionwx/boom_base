@@ -173,6 +173,56 @@ class Collection:
             )
 
     @classmethod
+    def updateOne(cls, condition, type, updateData):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+        # 计算更新数据
+        updateData = cls.composeUpdateData(type, updateData)
+        # 执行更新
+        if updateData:
+            DB.update_one(
+                condition,
+                updateData
+            )
+    
+    @classmethod
+    def updateMany(cls, condition, type, updateData):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+        # 计算更新数据
+        updateData = cls.composeUpdateData(type, updateData)
+        # 执行更新
+        if updateData:
+            DB.update_many(
+                condition,
+                updateData
+            )
+    
+    @classmethod
+    def composeUpdateData(cls, type, updateData):
+        update_data = {}
+        for k,v in updateData.items():
+            if k not in cls.FIELDS:
+                raise Exception("updateFieldNotSupported")
+            update_data[k] = v
+
+        if type == CollectionUpdateType.SET:
+            update_data["metadata.updateTime"] = time.time() * 1000
+            update_data = {"$set": update_data}
+        elif type == CollectionUpdateType.INC:
+            update_data = {"$inc": update_data}
+        elif type == CollectionUpdateType.PUSH:
+            update_data = {"$push": update_data}
+        elif type == CollectionUpdateType.PULL:
+            update_data = {"$pull": update_data}
+        elif type == CollectionUpdateType.ADD_TO_SET:
+            update_data = {"$addToSet": update_data}
+        else:
+            update_data["metadata.updateTime"] = time.time() * 1000
+            update_data = {"$set": update_data}
+        return update_data
+
+    @classmethod
     def delete(cls, id):
         # 获取集合引用
         DB = getCollectRef(cls.NAME)
@@ -356,6 +406,32 @@ class Collection:
 
         DB.update_one(
             { "_id": bson.ObjectId(id) },
+            { "$set": {
+                "isDelete": False,
+                "metadata.deleteTime": None
+            }}
+        )
+    
+    @classmethod
+    def softDeleteMany(cls, condition):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        DB.update_many(
+            condition,
+            { "$set": {
+                "isDelete": True,
+                "metadata.deleteTime": time.time() * 1000
+            }}
+        )
+    
+    @classmethod
+    def recoverMany(cls, condition):
+        # 获取集合引用
+        DB = getCollectRef(cls.NAME)
+
+        DB.update_many(
+            condition,
             { "$set": {
                 "isDelete": False,
                 "metadata.deleteTime": None
