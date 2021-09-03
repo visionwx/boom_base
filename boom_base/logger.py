@@ -8,8 +8,32 @@ from boom_base.parameters import getLogParaFromEnv
 def info(tag, content):
     print("[" + tag + "] " + content)
 
+from logging.handlers import SocketHandler
+from . import formatter
+
+class TCPLogstashHandler(SocketHandler):
+    """Python logging handler for Logstash. Sends events over TCP.
+    :param host: The host of the logstash server.
+    :param port: The port of the logstash server (default 5959).
+    :param message_type: The type of the message (default logstash).
+    :param fqdn; Indicates whether to show fully qualified domain name or not (default False).
+    :param version: version of logstash event schema (default is 0).
+    :param tags: list of tags for a logger (default is None).
+    """
+
+    def __init__(self, host, port=5959, message_type='logstash', tags=None, fqdn=False, version=0):
+        super(TCPLogstashHandler, self).__init__(host, port)
+        if version == 1:
+            self.formatter = formatter.LogstashFormatterVersion1(message_type, tags, fqdn)
+        else:
+            self.formatter = formatter.LogstashFormatterVersion0(message_type, tags, fqdn)
+
+    def makePickle(self, record):
+        return str.encode(self.formatter.format(record)) + b'\n'
+
 class MyLogger:
     def __init__(self, logToConsole=True, logFilePath=None, 
+        logTcpHost=None, logTcpPort=None,
         loggerName="LOGGER", maxBytes=1024*1024, backupCount=5):
         self.logToConsole = logToConsole
         self.logFilePath = logFilePath
@@ -17,6 +41,8 @@ class MyLogger:
         self.loggerName = loggerName
         self.maxBytes = maxBytes
         self.backupCount = backupCount
+        self.logTcpHost = logTcpHost
+        self.logTcpPort = logTcpPort
         self.logger = self.initLogger()
         
 
@@ -55,6 +81,14 @@ class MyLogger:
             consoleHandler = logging.StreamHandler(sys.stdout)
             consoleHandler.formatter = formatter
             logger.addHandler(consoleHandler)
+        
+        # tcp日志服务器
+        if self.logTcpHost is not None and self.logTcpPort is not None:
+            logger.addHandler(TCPLogstashHandler(
+                host=self.logTcpHost,
+                port=self.logTcpPort,
+                version=1,
+            ))
 
         # 指定日志的最低输出级别，默认为WARN级别
         logger.setLevel(logging.INFO)
@@ -63,29 +97,27 @@ class MyLogger:
         return logger
     
 
-    def info(self, TAG, logContent, withPrint=False):
-        print("start info")
+    def info(self, TAG, logContent, extra = None, withPrint=False):
         content = "[" + TAG + "], " + logContent
-        self.logger.info(content)
+        self.logger.info(content, extra=extra)
         self.logCounter += 1
         if withPrint:
             print(content)
-        print("end info")
         return True
     
 
-    def warn(self, TAG, logContent, withPrint=False):
+    def warn(self, TAG, logContent, extra = None, withPrint=False):
         content = "[" + TAG + "], " + logContent
-        self.logger.warn(content)
+        self.logger.warn(content, extra=extra)
         self.logCounter += 1
         if withPrint:
             print(content)
         return True
 
 
-    def error(self, TAG, logContent, withPrint=False):
+    def error(self, TAG, logContent, extra = None, withPrint=False):
         content = "[" + TAG + "], " + logContent
-        self.logger.error(content)
+        self.logger.error(content, extra=extra)
         self.logCounter += 1
         if withPrint:
             print(content)

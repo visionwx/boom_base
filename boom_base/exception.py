@@ -99,7 +99,7 @@ class RefreshTokenNotExistException(Exception):
 class TokenNotProvideException(Exception):
     ID = EXCEPTION_TYPE_ID.AUTH + "0003"
     def __str__(self):
-        return "RefreshTokenNotExistException"
+        return "TokenNotProvideException"
 
 class PhoneCodeVerifyFailedException(Exception):
     ID = EXCEPTION_TYPE_ID.AUTH + "0004"

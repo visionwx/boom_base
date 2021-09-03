@@ -9,13 +9,16 @@
 
 ## Usage
 ```
-pip3 install git+https://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@github.com/visionwx/boom_base.git@v0.1.52
+pip3 install git+https://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@github.com/visionwx/boom_base.git@v0.1.54
 
 python
 from boom_base import *
 ```
 
 ## Change
+#### 2021-09-03
+- 【新增】logger增加socketHandler
+
 #### 2021-07-31
 - 【新增】model/base.py 增加 updateOne,updateMany, softDeleteMany, recoverMany接口
 
