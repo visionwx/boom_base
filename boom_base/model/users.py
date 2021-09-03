@@ -17,6 +17,32 @@ class Users(Collection):
         "wechatProvider",
     ]
 
+    # @classmethod
+    # def get(cls, id):
+    #     data = super().get(id)
+    #     if "wechatProfileId" in data.keys():
+    #         data["wechatProfileId"] = str(data["wechatProfileId"])
+    #     return data
+
+    # @classmethod
+    # def list(cls, condition = None, 
+    #     after = None, before = None, limit = None, sort = -1,
+    #     filter = None):
+    #     datas = super().list(
+    #         condition = condition,
+    #         after = after,
+    #         before = before,
+    #         limit = limit,
+    #         sort = sort,
+    #         filter = filter
+    #     )
+    #     for perData in datas:
+    #         if "wechatProfileId" not in perData.keys():
+    #             continue
+    #         perData["wechatProfileId"] = str(perData["wechatProfileId"])
+    #     return datas
+        
+
 class Tokens(Collection):
     NAME = "tokens"
 
