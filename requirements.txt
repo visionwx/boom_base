@@ -1,0 +1,9 @@
+flask~=2.0.1
+flask_cors
+pytest-flask
+redis~=3.5.3
+pytest~=6.2.5
+setuptools~=57.0.0
+requests~=2.26.0
+Werkzeug~=2.0.1
+pymongo~=3.12.0
