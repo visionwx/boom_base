@@ -27,7 +27,7 @@ setup(
     packages=['boom_base', 'boom_base.model', 'boom_base.flask'],
     include_package_data=True,
     python_requires=">=3.7.*",
-    install_requires=['flask','pymongo'],
+    install_requires=['flask', 'pymongo', 'requests'],
     zip_safe=False,
     keywords='boom base'
 )
