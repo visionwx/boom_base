@@ -11,5 +11,3 @@ if os.environ.get('is_production', False):
 CORS_INSTANCE = CORS()
 CORS_INSTANCE.init_app(app=app, resources={r"*": {"origins": "*"}})
 
-if __name__ == "__main__":
-    app.run()
