@@ -15,6 +15,7 @@ class Users(Collection):
         "email",
         "phone",
         "wechatProvider",
+        "countryCode",
     ]
 
     # @classmethod
