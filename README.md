@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-11-09
+- 【优化】优化field 类型 判断，增加NumberField
+
 #### 2021-09-03
 - 【新增】logger增加socketHandler
 
