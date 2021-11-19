@@ -6,12 +6,13 @@ def timeStampNow():
 """ 支持的所有字段类型
 """
 class FIELD_TYPE:
-    STRING = str
-    INT    = int
-    FLOAT  = float
-    BOOL   = bool
-    LIST   = list
-    OBJECT = dict
+    STRING = [str]
+    INT    = [int]
+    FLOAT  = [float]
+    NUMBER = [int, float]
+    BOOL   = [bool]
+    LIST   = [list]
+    OBJECT = [dict]
 
 class Metadata:
     createTime = None
@@ -79,7 +80,7 @@ class Field:
     
     # 检查输入的值 类型是否匹配
     def verify(self, fieldValue):
-        return type(fieldValue) == self.type if fieldValue is not None else True
+        return type(fieldValue) in self.type if fieldValue is not None else True
     
     # 将输入的值 转换成该字段的类型
     def parse(self, fieldValue):
@@ -97,6 +98,11 @@ class IntField(Field):
     
 class FloatField(Field):
     type = FIELD_TYPE.FLOAT
+    def parse(self, fieldValue):
+        return float(fieldValue)
+
+class NumberField(Field):
+    type = FIELD_TYPE.NUMBER
     def parse(self, fieldValue):
         return float(fieldValue)
 
