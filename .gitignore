@@ -1,5 +1,10 @@
 build
 dist
 *.egg-info
+**/__pycache__
 __pycache__
 .idea
+.venv
+.vscode
+.env
+*.pyc
