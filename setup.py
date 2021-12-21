@@ -15,6 +15,12 @@ with open('README.md', 'r') as f:
 
 # package configuration - for reference see:
 # https://setuptools.readthedocs.io/en/latest/setuptools.html#id9
+requires = ['flask', 'pymongo', 'requests']
+
+# aliyun-mns
+requires.append("pycrypto")
+requires.append("aliyun-python-sdk-core-v3>=2.3.5")
+
 setup(
     name=about['__title__'],
     description=about['__description__'],
@@ -24,10 +30,15 @@ setup(
     author=about['__author__'],
     author_email=about['__author_email__'],
     url=about['__url__'],
-    packages=['boom_base', 'boom_base.model', 'boom_base.flask'],
+    packages=[
+        'boom_base', 'boom_base.model', 'boom_base.flask',
+        'boom_base.pubsub', 'boom_base.mns_python_sdk',
+        'boom_base.mns_python_sdk.mns'
+    ],
+    scripts = ["boom_base/mns_python_sdk/bin/mnscmd"],
     include_package_data=True,
     python_requires=">=3.7.*",
-    install_requires=['flask', 'pymongo', 'requests'],
+    install_requires=requires,
     zip_safe=False,
     keywords='boom base'
 )
