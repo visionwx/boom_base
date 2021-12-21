@@ -1,9 +1,9 @@
 import sys
-from mns_python_sdk.mns.account import Account
-from mns_python_sdk.mns.topic import TopicMessage
-from mns_python_sdk.mns.mns_exception import MNSExceptionBase
 import json
-from boom_base.pubsub import AbstractPubsubService
+from boom_base.mns_python_sdk.mns.account import Account
+from boom_base.mns_python_sdk.mns.topic import TopicMessage
+from boom_base.mns_python_sdk.mns.mns_exception import MNSExceptionBase
+from boom_base.pubsub.base import AbstractPubsubService
 from boom_base import config
 from typing import Dict
 

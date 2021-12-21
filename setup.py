@@ -30,7 +30,11 @@ setup(
     author=about['__author__'],
     author_email=about['__author_email__'],
     url=about['__url__'],
-    packages=['boom_base', 'boom_base.model', 'boom_base.flask', 'boom_base.pubsub', 'boom_base.mns_python_sdk'],
+    packages=[
+        'boom_base', 'boom_base.model', 'boom_base.flask',
+        'boom_base.pubsub', 'boom_base.mns_python_sdk',
+        'boom_base.mns_python_sdk.mns'
+    ],
     scripts = ["boom_base/mns_python_sdk/bin/mnscmd"],
     include_package_data=True,
     python_requires=">=3.7.*",
