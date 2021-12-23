@@ -4,15 +4,11 @@ from boom_base.mns_python_sdk.mns.account import Account
 from boom_base.mns_python_sdk.mns.topic import TopicMessage
 from boom_base.mns_python_sdk.mns.mns_exception import MNSExceptionBase
 from boom_base.pubsub.base import AbstractPubsubService
-from boom_base import config
 from typing import Dict
 
 
 class AliyunPubsubService(AbstractPubsubService):
-    def __init__(self):
-        accessKeyId = config.get_aliyun_access_key_id()
-        accessKeySecret = config.get_aliyun_access_key_secret()
-        endpoint = config.get_aliyun_mns_endpoint()
+    def __init__(self, accessKeyId: str, accessKeySecret: str, endpoint: str):
         self.my_account = Account(endpoint, accessKeyId, accessKeySecret)
     
     def publish(self, topicName: str, data: Dict):
@@ -30,7 +26,11 @@ class AliyunPubsubService(AbstractPubsubService):
 
 
 if __name__ == '__main__':
-    pubsub = AliyunPubsubService()
+    pubsub = AliyunPubsubService(
+        accessKeyId='',
+        accessKeySecret='',
+        endpoint='',
+    )
 
     topicName = 'BoomUatVideoCommented'
     data = {
