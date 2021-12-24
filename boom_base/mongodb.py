@@ -23,11 +23,19 @@ class MongoDB():
 MDB: MongoDB = None
 
 def getMongoInstance(
-    host, port, db, auth, username, password
+    host=None, 
+    port=None, 
+    db=None, 
+    auth=None, 
+    username=None, 
+    password=None
 ):
     global MDB
     if MDB is not None:
         return MDB
+
+    if host is None or port is None or db is None:
+        raise Exception("getMongoInstance error: host/port/db is None")
 
     mongoConfig = {
         'host': host,
