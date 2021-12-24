@@ -16,6 +16,15 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-12-24
+- 【修改】v0.1.62，getMongoInstance取消从环境变量获取参数，改为直接传参
+
+#### 2021-12-24
+- 【新增】v0.1.61，新增对boom_config.json的解析类 configParser.BoomConfig
+
+#### 2021-12-23
+- 【新增】v0.1.60，新增阿里云mns-sdk支持，以及更新鉴权方式 flask.auth.Authentication
+
 #### 2021-11-09
 - 【优化】优化field 类型 判断，增加NumberField
 
