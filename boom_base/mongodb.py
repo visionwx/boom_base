@@ -1,7 +1,5 @@
-import json
-import time, datetime
 import pymongo
-from .parameters import getMongoParaFromEnv
+
 
 class MongoDB():
     
@@ -24,12 +22,21 @@ class MongoDB():
 # 数据库实例
 MDB: MongoDB = None
 
-def getMongoInstance():
+def getMongoInstance(
+    host, port, db, auth, username, password
+):
     global MDB
     if MDB is not None:
         return MDB
 
-    mongoConfig = getMongoParaFromEnv()
+    mongoConfig = {
+        'host': host,
+        'port': port,
+        'db': db,
+        'auth': auth,
+        'username': username,
+        'password': password,
+    }
     MDB = MongoDB.create(**mongoConfig)
     
     return MDB
