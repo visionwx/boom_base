@@ -81,17 +81,33 @@ class RedisPubsubMixin():
         return True
 
 class RedisDB(RedisBase, RedisPubsubMixin):
-    def __init__(self):
-        redisConfig = getRedisParaFromEnv()
+    def __init__(self, redisConfig):
+        # redisConfig = getRedisParaFromEnv()
         redisDB = create_redis_db(**redisConfig)
         super().__init__(redisDB)
 
 RDB = None
-def getRedisDBInstance():
+def getRedisDBInstance(
+    host: str=None, 
+    port: int=None, 
+    db: int=None, 
+    password: str=None, 
+    decode_responses: str=None
+):
     global RDB
     if RDB is not None:
         return RDB
-    RDB = RedisDB()
+    
+    if host is None or port is None:
+        raise Exception("redis host/port is None")
+    redisConfig = {
+        "host":  host,
+        "port": port,
+        "db": db,
+        "password": password,
+        "decode_responses": decode_responses,
+    }
+    RDB = RedisDB(redisConfig)
     return RDB
 
 # if __name__ == "__main__":
