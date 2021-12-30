@@ -1,5 +1,5 @@
 import pymongo
-
+from boom_base.configParser import RelationDatabaseConfig
 
 class MongoDB():
     
@@ -35,16 +35,25 @@ def getMongoInstance(
         return MDB
 
     if host is None or port is None or db is None:
-        raise Exception("getMongoInstance error: host/port/db is None")
-
-    mongoConfig = {
-        'host': host,
-        'port': port,
-        'db': db,
-        'auth': auth,
-        'username': username,
-        'password': password,
-    }
+        # raise Exception("getMongoInstance error: host/port/db is None")
+        rdc = RelationDatabaseConfig.fromConfig()
+        mongoConfig = {
+            'host': rdc.host,
+            'port': rdc.port,
+            'db': rdc.db,
+            'auth': rdc.auth,
+            'username': rdc.username,
+            'password': rdc.password,
+        }
+    else:
+        mongoConfig = {
+            'host': host,
+            'port': port,
+            'db': db,
+            'auth': auth,
+            'username': username,
+            'password': password,
+        }
     MDB = MongoDB.create(**mongoConfig)
     
     return MDB

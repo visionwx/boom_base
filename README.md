@@ -16,6 +16,9 @@ from boom_base import *
 ```
 
 ## Change
+#### 2021-12-30
+- 【修改】v0.1.63，扩展BoomConfig,调整boom_base内所有对环境变量的依赖
+
 #### 2021-12-24
 - 【修改】v0.1.62，getMongoInstance取消从环境变量获取参数，改为直接传参
 
