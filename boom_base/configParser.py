@@ -44,7 +44,12 @@ class BoomConfig:
     def getEnableCORS(cls):
         if cls.config is None:
             raise Exception("BoomConfig not init")
-        return cls.config.get("enable_cors", False) 
+        return cls.config.get("enable_cors", False)
+    @classmethod
+    def getRemoteConfig(cls):
+        if cls.config is None:
+            raise Exception("BoomConfig not init")
+        return cls.config.get("remote_config", False) 
 
 class RelationDatabaseType:
     MONGO = "mongodb"
@@ -248,3 +253,69 @@ class FileRotateConfig:
             fileSize = data.get("file_size", None),
             fileCounts = data.get("file_counts", None),
         )
+
+class ObjectStorageConfig(ConfigBase):
+    """
+      "type": "oss",
+      "bucket": "boom-upload-test",
+      "region": "cn-shenzhen",
+      "domain": "ossupload.tf.visionwx.com",
+      "enable_cdn": true,
+      "enable_static": true,
+      "credentials": {
+        "access_key_id": "XXXX",
+        "access_key_secret": "XXXX",
+        "access_role": "XXXX"
+      }
+    """
+    KEY = "object_storage"
+    def __init__(self, _type, bucket, region, 
+        domain, enable_cdn, 
+        enable_static, credentials):
+        self._type = _type
+        self.bucket = bucket
+        self.region = region
+        self.domain = domain
+        self.enable_cdn = enable_cdn
+        self.enable_static = enable_static
+        self.credentials = credentials
+
+    @classmethod
+    def fromDict(cls, data) -> object:
+        if data is None or data == {}:
+            raise Exception("object storage config data none")
+        return cls(
+            _type = data.get("type", None),
+            bucket = data.get("bucket", None),
+            region = data.get("region", None),
+            domain = data.get("domain", None),
+            enable_cdn = data.get("enable_cdn", None),
+            enable_static = data.get("enable_static", None),
+            credentials = data.get("credentials", None),
+        )
+
+class UploadObjectStorageConfig(ObjectStorageConfig):
+
+    _upload_instance = None
+    UPLOAD_INSTANCE = "upload"
+    
+    @classmethod
+    def fromConfig(cls) -> object:
+        # 是否已经初始化过
+        if cls._upload_instance is None:
+            # 获取配置
+            cls._upload_instance = cls._fromConfig(cls.UPLOAD_INSTANCE)
+        return cls._upload_instance
+
+class DownloadObjectStorageConfig(ObjectStorageConfig):
+
+    _download_instance = None
+    DOWNLOAD_INSTANCE = "download"
+    
+    @classmethod
+    def fromConfig(cls) -> object:
+        # 是否已经初始化过
+        if cls._download_instance is None:
+            # 获取配置
+            cls._download_instance = cls._fromConfig(cls.DOWNLOAD_INSTANCE)
+        return cls._download_instance
