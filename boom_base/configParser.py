@@ -1,5 +1,6 @@
 import json
 import traceback
+import typing
 
 class BoomConfig:
     _instance = None
@@ -244,6 +245,6 @@ class FileRotateConfig:
         return cls(
             path = data.get("path", None),
             file = data.get("file", None),
-            fileSize = data.get("fileSize", None),
-            fileCounts = data.get("fileCounts", None),
+            fileSize = data.get("file_size", None),
+            fileCounts = data.get("file_counts", None),
         )
