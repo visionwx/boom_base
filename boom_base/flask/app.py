@@ -9,6 +9,9 @@ from geventwebsocket.handler import WebSocketHandler
 from boom_base.parameters import getEnvPara
 from boom_base.configParser import BoomConfig
 
+from gevent import monkey
+monkey.patch_all()
+
 class App:
     # flask app
     app = None
