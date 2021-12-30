@@ -7,6 +7,7 @@ from flask_cors import CORS
 from gevent.pywsgi import WSGIServer
 from geventwebsocket.handler import WebSocketHandler
 from boom_base.parameters import getEnvPara
+from boom_base.configParser import BoomConfig
 
 class App:
     # flask app
@@ -21,11 +22,10 @@ class App:
     def initApp(self):
         # 初始化Flask Application对象
         app = Flask(__name__)
-        if getEnvPara("is_production", default=False):
+        if BoomConfig.getEnableCORS():
             CORS(app, supports_credentials=True)
-
-        cors = CORS()
-        cors.init_app(app=app, resources={r"*": {"origins": "*"}})
+            cors = CORS()
+            cors.init_app(app=app, resources={r"*": {"origins": "*"}})
 
         # 把当前app放到堆里面，方便其他地方使用
         ctx = app.app_context()

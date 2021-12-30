@@ -1,6 +1,7 @@
 import json
 import redis
 from .parameters import getRedisParaFromEnv
+from boom_base.configParser import KvStoreConfig
 
 def create_redis_db(host='localhost', port=6379, 
     db=0, password=None, decode_responses=True):
@@ -92,21 +93,30 @@ def getRedisDBInstance(
     port: int=None, 
     db: int=None, 
     password: str=None, 
-    decode_responses: str=None
+    decode_responses: bool=True
 ):
     global RDB
     if RDB is not None:
         return RDB
     
     if host is None or port is None:
-        raise Exception("redis host/port is None")
-    redisConfig = {
-        "host":  host,
-        "port": port,
-        "db": db,
-        "password": password,
-        "decode_responses": decode_responses,
-    }
+        # raise Exception("redis host/port is None")
+        kvConfig = KvStoreConfig.fromConfig()
+        redisConfig = {
+            "host":  kvConfig.host,
+            "port": kvConfig.port,
+            "db": kvConfig.db,
+            "password": kvConfig.password,
+            "decode_responses": decode_responses,
+        }
+    else:
+        redisConfig = {
+            "host":  host,
+            "port": port,
+            "db": db,
+            "password": password,
+            "decode_responses": decode_responses,
+        }
     RDB = RedisDB(redisConfig)
     return RDB
 
