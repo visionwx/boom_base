@@ -98,7 +98,7 @@ class MyLogger:
     
 
     def info(self, TAG, logContent, extra = None, withPrint=False):
-        content = "[" + TAG + "], " + logContent
+        content = "[" + TAG + "] | " + logContent
         self.logger.info(content, extra=extra)
         self.logCounter += 1
         if withPrint:
@@ -107,7 +107,7 @@ class MyLogger:
     
 
     def warn(self, TAG, logContent, extra = None, withPrint=False):
-        content = "[" + TAG + "], " + logContent
+        content = "[" + TAG + "] | " + logContent
         self.logger.warn(content, extra=extra)
         self.logCounter += 1
         if withPrint:
@@ -116,7 +116,7 @@ class MyLogger:
 
 
     def error(self, TAG, logContent, extra = None, withPrint=False):
-        content = "[" + TAG + "], " + logContent
+        content = "[" + TAG + "] | " + logContent
         self.logger.error(content, extra=extra)
         self.logCounter += 1
         if withPrint:
