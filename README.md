@@ -16,6 +16,8 @@ from boom_base import *
 ```
 
 ## Change
+#### 2022-2-14 yanwei
+- 【修改】v0.1.66, 调整user的verifyToken，增加token过滤： isDelete为false
 #### 2021-12-30
 - 【修改】v0.1.63，扩展BoomConfig,调整boom_base内所有对环境变量的依赖
 - 【修改】flask app增加gevent monkey patch
