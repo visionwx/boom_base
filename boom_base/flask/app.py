@@ -51,4 +51,9 @@ class App:
             self.app, 
             handler_class=WebSocketHandler)
         http_server.serve_forever()
-    
+
+
+if __name__ =='__main__':
+
+    app = App('123')
+    app.run()

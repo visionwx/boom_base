@@ -1,4 +1,3 @@
-import json
 import time
 import uuid
 from boom_base.model.base import Collection
@@ -59,7 +58,7 @@ class Tokens(Collection):
     def verifyToken(cls, token):
         # 提取token
         _tokens = cls.list(condition={
-            "token": token
+            "token": token, "isDelete": False
         })
         if len(_tokens) <= 0:
             raise TokenExpireException()
@@ -73,6 +72,8 @@ class Tokens(Collection):
         if userId is None:
             raise TokenExpireException()
         return userId
+
+
 
     # 给指定用户随机生成token, 2592000=30天有效期
     @classmethod
